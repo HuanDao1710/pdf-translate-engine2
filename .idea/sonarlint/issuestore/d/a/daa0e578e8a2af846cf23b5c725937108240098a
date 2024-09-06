@@ -1,0 +1,17 @@
+
+k	java:S117V"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÕÎêıÿÿÿÿ
+f	java:S117y"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¯€»•
+l	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ü‹§¼øÿÿÿÿ
+l	java:S117‰"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ûÒ…áÿÿÿÿÿ
+m	java:S116@"XRename this field "finish_reason" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(£ø¨Ø
+c	java:S100R"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¯üÓÖ
+h	java:S100V"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÕÎêıÿÿÿÿ
+r	java:S116q"XRename this field "prompt_tokens" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(şß‰úÿÿÿÿ
+q	java:S116r"\Rename this field "completion_tokens" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ûğ´ú
+l	java:S116s"WRename this field "total_tokens" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ú°Œ¤
+c	java:S100u"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ØÊÿË
+c	java:S100y"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¯€»•
+h	java:S100}"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÑøÔ²ûÿÿÿÿ
+i	java:S100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ü‹§¼øÿÿÿÿ
+c	java:S100…"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ğ×ı	
+i	java:S100‰"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ûÒ…áÿÿÿÿÿ

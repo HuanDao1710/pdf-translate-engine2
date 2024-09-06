@@ -1,0 +1,89 @@
+
+\
+java:S1854(":Remove this useless assignment to local variable "path13".(…û„úùÿÿÿÿ8ò©¬œ2
+W
+java:S1854'":Remove this useless assignment to local variable "path12".(¿ÁöÆ8Øûåœ2
+\
+java:S1854&":Remove this useless assignment to local variable "path11".(â ¶ÿÿÿÿÿ8¬¸§œ2
+\
+java:S1854%":Remove this useless assignment to local variable "path10".(¯ÑàÉıÿÿÿÿ8Øûåœ2
+[
+java:S1854$"9Remove this useless assignment to local variable "path9".(ƒ¥ù‹ÿÿÿÿÿ8Øûåœ2
+V
+java:S1854#"9Remove this useless assignment to local variable "path8".(éãà¡8Øûåœ2
+V
+java:S1854""9Remove this useless assignment to local variable "path7".(İ¨š¾8Øûåœ2
+[
+java:S1854!"9Remove this useless assignment to local variable "path6".(‡§°˜şÿÿÿÿ8Øûåœ2
+V
+java:S1854 "9Remove this useless assignment to local variable "path5".(ãş¦Ä8Øûåœ2
+Y
+java:S1854"<Remove this useless assignment to local variable "filePath".(–õ²é8Øûåœ2
+[
+java:S1854"9Remove this useless assignment to local variable "path2".(˜¿…şÿÿÿÿ8Øûåœ2
+[
+java:S1854"9Remove this useless assignment to local variable "path3".(…Ñ…Ğıÿÿÿÿ8Øûåœ2
+c
+java:S1075"ARefactor your code to get this URI from a customizable parameter.(…Ñ…Ğıÿÿÿÿ8Ùûåœ2
+L
+java:S1481"*Remove this unused "path3" local variable.(…Ñ…Ğıÿÿÿÿ8Ùûåœ2
+c
+java:S1075"ARefactor your code to get this URI from a customizable parameter.(˜¿…şÿÿÿÿ8Ùûåœ2
+L
+java:S1481"*Remove this unused "path2" local variable.(˜¿…şÿÿÿÿ8Ùûåœ2
+^
+java:S1075"ARefactor your code to get this URI from a customizable parameter.(–õ²é8Ùûåœ2
+J
+java:S1481"-Remove this unused "filePath" local variable.(–õ²é8Ùûåœ2
+^
+java:S1075"ARefactor your code to get this URI from a customizable parameter.(øÑÚ¹8Ùûåœ2
+^
+java:S1075 "ARefactor your code to get this URI from a customizable parameter.(ãş¦Ä8Ùûåœ2
+G
+java:S1481 "*Remove this unused "path5" local variable.(ãş¦Ä8Ùûåœ2
+c
+java:S1075!"ARefactor your code to get this URI from a customizable parameter.(‡§°˜şÿÿÿÿ8Ùûåœ2
+L
+java:S1481!"*Remove this unused "path6" local variable.(‡§°˜şÿÿÿÿ8Ùûåœ2
+^
+java:S1075""ARefactor your code to get this URI from a customizable parameter.(İ¨š¾8Ùûåœ2
+G
+java:S1481""*Remove this unused "path7" local variable.(İ¨š¾8Ùûåœ2
+^
+java:S1075#"ARefactor your code to get this URI from a customizable parameter.(éãà¡8Ùûåœ2
+G
+java:S1481#"*Remove this unused "path8" local variable.(éãà¡8Ùûåœ2
+c
+java:S1075$"ARefactor your code to get this URI from a customizable parameter.(ƒ¥ù‹ÿÿÿÿÿ8Ùûåœ2
+L
+java:S1481$"*Remove this unused "path9" local variable.(ƒ¥ù‹ÿÿÿÿÿ8Ùûåœ2
+c
+java:S1075%"ARefactor your code to get this URI from a customizable parameter.(¯ÑàÉıÿÿÿÿ8Ùûåœ2
+M
+java:S1481%"+Remove this unused "path10" local variable.(¯ÑàÉıÿÿÿÿ8Ùûåœ2
+c
+java:S1075&"ARefactor your code to get this URI from a customizable parameter.(â ¶ÿÿÿÿÿ8Ùûåœ2
+M
+java:S1481&"+Remove this unused "path11" local variable.(â ¶ÿÿÿÿÿ8®¸§œ2
+^
+java:S1075'"ARefactor your code to get this URI from a customizable parameter.(¿ÁöÆ8Ùûåœ2
+H
+java:S1481'"+Remove this unused "path12" local variable.(¿ÁöÆ8Ùûåœ2
+c
+java:S1075("ARefactor your code to get this URI from a customizable parameter.(…û„úùÿÿÿÿ8Ùûåœ2
+M
+java:S1481("+Remove this unused "path13" local variable.(…û„úùÿÿÿÿ8ó©¬œ2
+G	java:S1065"+Replace this use of System.out by a logger.(ÙŒÉ8Ûûåœ2
+L	java:S1066"+Replace this use of System.out by a logger.(ò˜—ıÿÿÿÿ8Ûûåœ2
+L	java:S1068"+Replace this use of System.out by a logger.(ÈÊƒ¿şÿÿÿÿ8Ûûåœ2
+G	java:S1069"+Replace this use of System.out by a logger.(¹‘‡ô8Üûåœ2
+L	java:S106:"+Replace this use of System.out by a logger.(•ÑÙÃşÿÿÿÿ8Üûåœ2
+]	java:S125L"<This block of commented-out lines of code should be removed.(ü‡øúÿÿÿÿ8ßûåœ2
+c
+java:S1075]"ARefactor your code to get this URI from a customizable parameter.(¸‰ê§úÿÿÿÿ8àûåœ2
+^
+java:S1075`"ARefactor your code to get this URI from a customizable parameter.(²¦Éá8àûåœ2
+^
+java:S1075a"ARefactor your code to get this URI from a customizable parameter.(›ëÑº8áûåœ2
+\
+java:S1144q":Remove this unused private "transformPageIfNeedTo" method.(àâƒ°ùÿÿÿÿ8âûåœ2

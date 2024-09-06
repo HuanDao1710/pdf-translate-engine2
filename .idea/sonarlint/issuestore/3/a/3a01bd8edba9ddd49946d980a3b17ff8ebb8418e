@@ -1,0 +1,10 @@
+
+f	java:S117("QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(™Ø¹´
+f	java:S1170"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ìÛîÌ
+o	java:S116	"URename this field "max_tokens" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(í¦íùÿÿÿÿ
+j	java:S116
+"PRename this field "top_p" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¦¼¡»ùÿÿÿÿ
+c	java:S100$"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ºëş›
+c	java:S100("NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(™Ø¹´
+b	java:S100,"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(âØÕz
+c	java:S1000"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ìÛîÌ
