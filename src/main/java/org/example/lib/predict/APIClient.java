@@ -84,7 +84,7 @@ public class APIClient {
 			}
 		}
 
-		System.out.println("Response from server: " + response.toString());
+		System.out.println("Response from server: " + response);
 
 		// Chuyển đổi phản hồi JSON thành List<List<Integer>>
 		List<List<List<Integer>>> result = gson.fromJson(response.toString(),
