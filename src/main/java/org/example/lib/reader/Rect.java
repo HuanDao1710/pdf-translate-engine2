@@ -1,5 +1,8 @@
 package org.example.lib.reader;
 
+
+import java.util.List;
+
 public class Rect {
 	private float x1;
 	private float y1;
@@ -13,8 +16,8 @@ public class Rect {
 		this.y2 = y2;
 	}
 
-	public float[] asVector() {
-		return new float[]{x1, y1, x2, y2};
+	public List<Float> asVector() {
+		return List.of(x1, y1, x2, y2);
 	}
 
 	public float getX1() {

@@ -1,7 +1,5 @@
 package org.example.lib.writer;
 
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.*;
 import org.example.lib.reader.Line;
@@ -9,50 +7,12 @@ import org.example.lib.reader.Paragraph;
 import org.example.lib.reader.Rect;
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
+import java.util.regex.Pattern;
 
 public class ContentWriter {
 
-	public static void writeParagraph (PDPageContentStream contentStreamWriter,PDDocument document, PDPage page, Paragraph content) throws
-			IOException {
-
-			var rect = content.getShape();
-			// Thêm văn bản vào vùng đã xác định
-		contentStreamWriter.beginText();
-		if(Objects.nonNull(content.getStyle())) {
-			contentStreamWriter.setNonStrokingColor(content.getStyle().getColor());
-			contentStreamWriter.setFont(PDType1Font.HELVETICA, content.getStyle().getTextHeight());
-		}
-		contentStreamWriter.newLineAtOffset(rect.getX1(), rect.getY2());
-		try {
-			contentStreamWriter.showText(normalizeTextNoGlyph(PDType1Font.COURIER, content.getTextString()));
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-		contentStreamWriter.endText();
-	}
-
-	private static String normalizeTextNoGlyph(PDFont font, String text) {
-		try {
-			font.encode(text);
-			return text;
-		} catch (Exception ignored) {
-		}
-		StringBuilder stringBuilder = new StringBuilder();
-		for (int i = 0; i < text.length(); i++) {
-			try {
-				font.encode(String.valueOf(text.charAt(i)));
-				stringBuilder.append(text.charAt(i));
-			} catch (Exception ex) {
-				stringBuilder.append(" ");
-			}
-		}
-
-		return stringBuilder.toString();
-	}
-
-	public static void write(PDPageContentStream contentStreamWriter, Paragraph content, String translatedText, PDFont font) throws
-			IOException {
+	public static void write(PDPageContentStream contentStreamWriter, Paragraph content,
+			String translatedText, PDFont font) throws IOException {
 		int start = 0;
 		int end = 0;
 
@@ -70,11 +30,17 @@ public class ContentWriter {
 
 		var text = normalizeTextNoGlyph(font, translatedText);
 
-//		contentStreamWriter.setStrokingColor(0.0f);
+		contentStreamWriter.setStrokingColor(0.0f);
 //	 for(var line : content.getLines()) {
-//		 contentStreamWriter.addRect(line.getShape().getX1(), line.getShape().getY1(), Math.abs(line.getShape().getX1() - line.getShape().getX2()), Math.abs(line.getShape().getY1() - line.getShape().getY2()));
+//		 contentStreamWriter.addRect(line.getShape().getX1(), line.getShape().getY1()
+//				 , Math.abs(line.getShape().getX1() - line.getShape().getX2()), Math.abs(line.getShape().getY1() - line.getShape().getY2()));
 //	 }
-//		contentStreamWriter.stroke();
+
+
+		contentStreamWriter.addRect(content.getShape().getX1(), content.getShape().getY1()
+				, Math.abs(content.getShape().getX1() - content.getShape().getX2()), Math.abs(content.getShape().getY1() - content.getShape().getY2()));
+		contentStreamWriter.stroke();
+
 
 		try {
 			contentStreamWriter.setNonStrokingColor(content.getStyle().getColor());
@@ -176,12 +142,36 @@ public class ContentWriter {
 	}
 
 	static int[] possibleWrapPoints(String text) {
-		String[] split = text.split("\\b");
+		String regex = "((?<=.))";
+		if (Pattern.compile(".*[a-zA-Z ].*").matcher(text).matches()) {
+			regex = "(?<=[\s.,;:\"'!#。、])";
+		}
+		String[] split = text.split(regex);
 		int[] ret = new int[split.length];
 		ret[0] = split[0].length();
 		for (int i = 1; i < split.length; i++)
 			ret[i] = ret[i - 1] + split[i].length();
 		return ret;
 	}
+
+	private static String normalizeTextNoGlyph(PDFont font, String text) {
+		try {
+			font.encode(text);
+			return text;
+		} catch (Exception ignored) {
+		}
+		StringBuilder stringBuilder = new StringBuilder();
+		for (int i = 0; i < text.length(); i++) {
+			try {
+				font.encode(String.valueOf(text.charAt(i)));
+				stringBuilder.append(text.charAt(i));
+			} catch (Exception ex) {
+				stringBuilder.append(" ");
+			}
+		}
+
+		return stringBuilder.toString();
+	}
+
 
 }
