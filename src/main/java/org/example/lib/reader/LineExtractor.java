@@ -6,7 +6,6 @@ import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.graphics.color.PDColor;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.apache.pdfbox.text.TextPosition;
-import org.apache.pdfbox.util.Matrix;
 import org.example.lib.utils.Pair;
 import java.io.IOException;
 import java.util.*;
@@ -23,7 +22,6 @@ public class LineExtractor {
 	}
 
 	public List<Line> extract( int pageIndex) throws IOException {
-//		Matrix pageMatrix = page.getMatrix();
 		PDFTextStripper textStripper = new PDFTextStripperSuper() {
 			final Map<Pair<Float, Float>, PDColor> colorMap = new HashMap<>();
 			@Override
@@ -32,44 +30,38 @@ public class LineExtractor {
 				var textMatrix = text.getTextMatrix();
 				colorMap.put(new Pair<>(textMatrix.getTranslateX(), textMatrix.getTranslateY()
 				), getGraphicsState().getNonStrokingColor());
-//				colorMap.put(new Pair<>(text.getX(), text.getY()), getGraphicsState().getNonStrokingColor());
 			}
 
-
 			@Override
-			protected void writeString(String text, List<TextPosition> textPositions) throws
+			protected void writeString(String _text, List<TextPosition> textPositions) throws
 					IOException {
 				if(textPositions.isEmpty()) return;
-				TextPosition textPosition = textPositions.get(0);
-//				int i = 0;
-//				for(var pos : textPositions) {
-//					if(Utils.isContainsText(pos.getUnicode())) {
-//						textPosition = pos;
-//						break;
-//					}
-//					i++;
-//				}
-				if(Objects.isNull(textPosition)) return;
+				textPositions.sort(Comparator.comparing(tp -> tp.getTextMatrix().getTranslateX()));
+				List<List<TextPosition>> textPositionList = splitTextPositions(textPositions);
+				for(var texts : textPositionList) {
+					extractPart(texts);
+				}
+				super.writeString(_text, textPositions);
+			}
 
-//				StringBuilder text = new StringBuilder();
-//				//getText
-//				for(int j = i; j < textPositions.size(); j ++) {
-//					text.append(textPositions.get(j).getUnicode());
-//				}
+			private void extractPart (List<TextPosition> textPositions) {
+				//getText
+				StringBuilder stringBuilder = new StringBuilder();
+				for(int j = 0; j < textPositions.size(); j ++) {
+					stringBuilder.append(textPositions.get(j).getUnicode());
+				}
+				var text = stringBuilder.toString();
+				//get position
+				TextPosition textPosition = textPositions.get(0);
 				var font = textPosition.getFont();
 				var lastPosition = textPositions.get(textPositions.size() - 1);
 				var direction = textPosition.getDir();
-
 				float x1 = textPosition.getTextMatrix().getTranslateX();
 				float y1 = textPosition.getTextMatrix().getTranslateY();
 				var scale = textPosition.getYScale();
 				float y2 = y1 + scale;
 				float x2 = lastPosition.getTextMatrix().getTranslateX() + lastPosition.getWidth();
-				float[] sw = swap(x1, x2);
-				x1 = sw[0];
-				x2 = sw[1];
-				System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAA: " + direction + " " + textPosition.getRotation() + "|" + text);
-
+				//extract style
 				var style = new TextStyle(
 						scale,
 						font,
@@ -88,7 +80,7 @@ public class LineExtractor {
 					currentLine = new Line(new Rect(x1, y1, x2, y2));
 				}
 				//Add line to lines
-				if(currentRect.getY1() != y1 || (Math.abs(currentRect.getX2() - x1) > scale * 2) ) {
+				if(currentRect.getY1() != y1 || (Math.abs(currentRect.getX2() - x1) > scale * 2 && currentRect.getX1() != x1) ) {
 					currentLine.endLine();
 					lines.add(currentLine);
 					currentLine = new Line(new Rect(x1, y1, x2, y2));
@@ -97,7 +89,12 @@ public class LineExtractor {
 				//add string to line
 				currentLine.addIntoLine(text, new Rect(x1, y1, x2, y2), style);
 				currentRect = currentLine.getShape();
-				super.writeString(text, textPositions);
+			}
+
+			private  List<List<TextPosition>> splitTextPositions(List<TextPosition> textPositions) {
+				var result = new ArrayList<List<TextPosition>>();
+				result.add(textPositions);
+				return result;
 			}
 		};
 

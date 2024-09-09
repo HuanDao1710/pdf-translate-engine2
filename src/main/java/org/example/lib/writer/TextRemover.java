@@ -22,18 +22,14 @@ import java.util.List;
 import java.util.Objects;
 
 public class TextRemover {
-	public static void removeAllTextFromPDF(PDDocument document) throws
+	public static void removeAllTextFromPDF(PDDocument document, int limit) throws
 			IOException {
 		document.setAllSecurityToBeRemoved(true);
-//		if (document.isEncrypted())
-//		{
-//			System.err.println(
-//					"Error: Encrypted documents are not supported for this example.");
-//			System.exit(1);
-//		}
+		var pages = document.getPages();
 
-		for (PDPage page : document.getPages())
+		for (int i = 0; i < limit; i++ )
 		{
+			var page = pages.get(i);
 			List<Object> newTokens = createTokensWithoutText(page);
 			PDStream newContents = new PDStream(document);
 			writeTokensToStream(newContents, newTokens);

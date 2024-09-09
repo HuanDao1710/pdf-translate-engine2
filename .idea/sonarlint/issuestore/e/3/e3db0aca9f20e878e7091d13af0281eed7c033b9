@@ -1,8 +1,2 @@
 
-X	java:S125"<This block of commented-out lines of code should be removed.(ı‚°Æ8œù£œ2
-]	java:S125#"<This block of commented-out lines of code should be removed.(¡à„üÿÿÿÿ8ù£œ2
-X	java:S125,"<This block of commented-out lines of code should be removed.(§«Ï‹8Ÿù£œ2
-]	java:S1256"<This block of commented-out lines of code should be removed.(‰¬Âçûÿÿÿÿ8Ÿù£œ2
-G	java:S106G"+Replace this use of System.out by a logger.(ÍÓ‚´8áÒÍœ2
-V
-java:S1128	":Remove this unused import 'org.apache.pdfbox.util.Matrix'.(‘ÕÌW8ƒª¦œ2
+m	java:S117$"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ğ×›×8Ç®ğ¦2

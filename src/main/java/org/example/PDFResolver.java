@@ -12,89 +12,98 @@ import org.example.dsp.request.TranslateRequest;
 import org.example.lib.reader.*;
 import org.example.lib.writer.ContentWriter;
 import org.example.lib.writer.TextRemover;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class PDFResolver {
 	private static PDFont regularFont;
 	private static PDFont italicFont;
 	private static PDFont boldFont;
+	private final InputStream inputStream;
+	private final String from;
+	private final String to;
 
-	public void resolve () throws IOException {
-		String path3 =  "D:\\CurrentProject\\PDFTranslateSolution\\sample\\index.pdf";
-		String path2 = "D:\\CurrentProject\\PDFTranslateSolution\\sample\\pdf-sample.pdf";
-		String filePath = "D:\\CurrentProject\\PDFTranslateSolution\\sample\\Salt and Sodium -Sample.pdf";
-		String path4= "D:\\CurrentProject\\PDFTranslateSolution\\sample\\somatosensory.pdf";
-		String path5 = "D:\\CurrentProject\\PDFTranslateSolution\\sample\\pdf-sample.pdf";
-		String path6 = "D:\\CurrentProject\\PDFTranslateSolution\\sample\\sample2.pdf";
-		String path7 = "D:\\CurrentProject\\PDFTranslateSolution\\sample\\sample3.pdf";
-		String path8 = "D:\\CurrentProject\\PDFTranslateSolution\\sample\\sample4.pdf";
-		String path9 = "D:\\CurrentProject\\PDFTranslateSolution\\sample\\sample5.pdf";
-		String path10 = "D:\\CurrentProject\\PDFTranslateSolution\\sample\\eng.pdf";
-		String path11 = "D:\\CurrentProject\\PDFTranslateSolution\\sample\\arabic2.pdf";
-		String path12 = "D:\\CurrentProject\\PDFTranslateSolution\\sample\\sample6.pdf";
-		String path13 = "D:\\CurrentProject\\PDFTranslateSolution\\sample\\arabic3.pdf";
-		List<List<Paragraph>> pageParagraphs = new ArrayList<>();
+	public PDFResolver(InputStream inputStream, String from, String to) {
+		this.inputStream = inputStream;
+		this.from = from;
+		this.to = to;
+	}
 
-		PDDocument document = PDDocument.load(new File(path4));
-		LineExtractor lineExtractor = new LineExtractor(document);
+	public ByteArrayOutputStream resolve( int limit, int numPageTranslateWithGPT, String gptAPIKey) throws IOException {
 
+		PDDocument document = PDDocument.load(inputStream);
 		var pages = document.getPages();
-
-		for(int i = 0; i < pages.getCount(); i ++) {
-			var lines = lineExtractor.extract( i + 1);
-			var paragraphs = AIParagraphExtractor.extract(lines);
-			pageParagraphs.add(paragraphs);
-			for(var para : paragraphs) {
-				System.out.println("-----------------------------------");
-				System.out.println(para.getTextString());
-
-				System.out.println(para.getShape().getX1() + "|" + para.getShape().getX2() + "|" + para.getShape().getY1() + "|" + para.getShape().getY2() );
-				if(Objects.nonNull(para.getStyle()))	{System.out.println(para.getStyle().getColor());
-					System.out.println(para.getStyle().getFont());}
-			}
-			lineExtractor.resetLine();
+		if(limit == -1) {
+			limit = pages.getCount();
 		}
+
+//		var pageLines = IntStream.range(0, pages.getCount()).boxed().parallel()
+//				.map(index -> {
+//					LineExtractor lineExtractor = new LineExtractor(document);
+//					List<Line> lines ;
+//					try {
+//						lines = lineExtractor.extract( index + 1);
+//					} catch (IOException e) {
+//						return  new ArrayList<Line>();
+//					}
+//					return lines;
+//				}).toList();
+		List<List<Line>> pageLines = new ArrayList<>();
+		for (int index = 0; index< limit; index ++) {
+			LineExtractor lineExtractor = new LineExtractor(document);
+			List<Line> lines = null;
+			try {
+				lines = lineExtractor.extract( index + 1);
+			} catch (IOException e) {
+
+			}
+			pageLines.add(lines);
+		}
+		var cropBox = pages.get(0).getCropBox();
+		List<List<Paragraph>> pageParagraphs = AIParagraphExtractor.extract(pageLines, cropBox.getWidth(), cropBox.getHeight());
 		var dsp = DSPTranslator.getInstance();
-	var paraTexTranslate = pageParagraphs.parallelStream()
-				.map(paragraphs -> dsp.longTranslate(new TranslateRequest("ar", "vi", paragraphs
-						.stream()
-						.map(i -> i.getTextString()).collect(Collectors.toList()))))
-				.collect(Collectors.toList());
-		TextRemover.removeAllTextFromPDF(document);
+		var paraTexTranslate = pageParagraphs.parallelStream()
+					.map(paragraphs -> dsp.longTranslate(new TranslateRequest(this.from, this.to, paragraphs
+							.stream()
+							.map(Paragraph::getTextString).toList())))
+					.toList();
+		TextRemover.removeAllTextFromPDF(document, limit);
 
-		for(int i = 0; i< pages.getCount(); i ++) {
-			var pagePara = pageParagraphs.get(i);
-			var translatedTexts = paraTexTranslate.get(i);
-			var page = pages.get(i);
-			PDPageContentStream contentStreamWriter = new PDPageContentStream(document, page,
-					PDPageContentStream.AppendMode.APPEND, true, true);
-//			transformPageIfNeedTo(contentStreamWriter, page);
-			for(int j  = 0; j < pagePara.size(); j ++) {
-				var para = pagePara.get(j);
-				var translatedText = translatedTexts.get(j);
-				var font = getFont(document, para.getStyle());
-
-				ContentWriter.write(contentStreamWriter, para, translatedText, font);
-			}
-			contentStreamWriter.close();
+		for(int i = 0; i < limit; i ++) {
+			handleWritePage(document, pageParagraphs.get(i),paraTexTranslate.get(i), pages.get(i));
 		}
-		document.save("D:\\CurrentProject\\PDFTranslateSolution\\output\\result.pdf");
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+//		document.save(outputStream);
+		document.save("output/result1.pdf");
 		document.close();
+		return outputStream;
+	}
+
+	private void handleWritePage (PDDocument document ,List<Paragraph> pagePara, List<String> translatedTexts, PDPage page) throws
+			IOException {
+		PDPageContentStream contentStreamWriter = new PDPageContentStream(document, page,
+				PDPageContentStream.AppendMode.APPEND, 	true, true);
+//			transformPageIfNeedTo(contentStreamWriter, page);
+		for(int j  = 0; j < pagePara.size(); j ++) {
+			var para = pagePara.get(j);
+			var translatedText = translatedTexts.get(j);
+			var font = getFont(document, para.getStyle());
+
+			ContentWriter.write(contentStreamWriter, para, translatedText, font);
+		}
+		contentStreamWriter.close();
 	}
 
 	public static PDFont getFont(PDDocument document, TextStyle style) throws
 			IOException {
 		if(Objects.isNull(regularFont)) {
-			regularFont =  PDType0Font.load(document, new File("D:\\CurrentProject\\PDFTranslateSolution\\src\\main\\java\\org\\example\\fonts\\arial-unicode-ms.ttf"));
+			regularFont =  PDType0Font.load(document, new File("src/main/java/org/example/fonts/arial-unicode-ms.ttf"));
 		}
-
-		if(Objects.isNull(italicFont)) italicFont = PDType0Font.load(document, new File("D:\\CurrentProject\\PDFTranslateSolution\\src\\main\\java\\org\\example\\fonts\\Arial-Unicode-Italic.ttf"));
-		if(Objects.isNull(boldFont)) boldFont = PDType0Font.load(document, new File("D:\\CurrentProject\\PDFTranslateSolution\\src\\main\\java\\org\\example\\fonts\\Arial-Unicode-Bold.ttf"));
+		if(Objects.isNull(italicFont)) italicFont = PDType0Font.load(document, new File("src/main/java/org/example/fonts/Arial-Unicode-Italic.ttf"));
+		if(Objects.isNull(boldFont)) boldFont = PDType0Font.load(document, new File("src/main/java/org/example/fonts/Arial-Unicode-Bold.ttf"));
 		try {
 			var base = style.getFont().getFontDescriptor().getFontName();
 			if(base.contains("Italic")) {
@@ -133,4 +142,5 @@ public class PDFResolver {
 					(cropBox.getHeight() - cropBox.getWidth()) / 2));
 		}
 	}
+
 }

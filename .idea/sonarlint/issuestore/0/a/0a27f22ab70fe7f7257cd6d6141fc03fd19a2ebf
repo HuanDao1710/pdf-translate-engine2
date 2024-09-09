@@ -1,4 +1,7 @@
 
-G	java:S106="+Replace this use of System.out by a logger.(øŒ¼Æ8—Á¯›2
-L	java:S106K"+Replace this use of System.out by a logger.(Ô˜ï¸ùÿÿÿÿ8˜Á¯›2
-L	java:S106W"+Replace this use of System.out by a logger.(Òë°Ôûÿÿÿÿ8™Á¯›2
+W
+java:S1118":Add a private constructor to hide the implicit public one.(ÍÀÅ8ò¢¿³2
+Z
+java:S1172!"8Remove these unused method parameters "width", "height".(ãıüôûÿÿÿÿ8õ¢¿³2
+X	java:S125?"<This block of commented-out lines of code should be removed.(×©ùÙ8ù¢¿³2
+X	java:S125X"<This block of commented-out lines of code should be removed.(±Ì÷8û¢¿³2

@@ -8,12 +8,10 @@ import java.util.Map;
 public class Line {
 	private Rect shape;
 	private TextStyle textStyle;
-	private float height;
 	private final List<String> texts = new ArrayList<>();
 	private final List<TextStyle> styles = new ArrayList<>();
 	public Line(Rect shape) {
 		this.shape = shape;
-//		this.height = height;
 	}
 
 	public void addIntoLine (String text, Rect shape, TextStyle style){

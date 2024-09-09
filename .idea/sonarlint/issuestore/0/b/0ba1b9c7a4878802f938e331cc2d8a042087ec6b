@@ -1,0 +1,31 @@
+
+G
+java:S1481	"*Remove this unused "path3" local variable.(÷×ÕØ8 ®ğ¦2
+L
+java:S1481
+"*Remove this unused "path2" local variable.(ê²¼½ûÿÿÿÿ8 ®ğ¦2
+J
+java:S1481"-Remove this unused "filePath" local variable.(ÏœŒ8Ò¿²2
+G
+java:S1481"*Remove this unused "path4" local variable.(•‚èÌ8è±´2
+L
+java:S1481"*Remove this unused "path5" local variable.(óÁ¶úÿÿÿÿ8 ®ğ¦2
+L
+java:S1481"*Remove this unused "path6" local variable.(÷»ëÊÿÿÿÿÿ8Š©´2
+G
+java:S1481"*Remove this unused "path8" local variable.(ô­Ë¦8 ®ğ¦2
+L
+java:S1481"*Remove this unused "path9" local variable.(Í¿Á†ıÿÿÿÿ8ì˜´2
+H
+java:S1481"+Remove this unused "path10" local variable.(Óö›ò8œ ´2
+H
+java:S1481"+Remove this unused "path11" local variable.(ù‰ó—8 ®ğ¦2
+M
+java:S1481"+Remove this unused "path12" local variable.(‹Ø˜ıÿÿÿÿ8æ´2
+H
+java:S1481"+Remove this unused "path13" local variable.(•İªâ8 ®ğ¦2
+M
+java:S1481"+Remove this unused "path14" local variable.(ÌÎà­ıÿÿÿÿ8óîš´2
+I
+java:S1481",Remove this unused "outPath" local variable.(í‹ƒò8¤®ğ¦2
+]	java:S125"<This block of commented-out lines of code should be removed.(–›òèùÿÿÿÿ8¥®ğ¦2
