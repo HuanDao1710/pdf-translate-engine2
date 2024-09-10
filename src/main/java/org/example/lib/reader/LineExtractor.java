@@ -14,7 +14,7 @@ import java.util.List;
 public class LineExtractor {
 	List<Line> lines = new ArrayList<>();
 	private TextStyle globalStyle = null;
-	private Line currentLine = null;
+	private LineBuilder lineBuilder = null;
 	private Rect currentRect = null;
 	private final PDDocument document;
 	public LineExtractor(PDDocument pdDocument) {
@@ -46,11 +46,11 @@ public class LineExtractor {
 
 			private void extractPart (List<TextPosition> textPositions) {
 				//getText
-				StringBuilder stringBuilder = new StringBuilder();
-				for(int j = 0; j < textPositions.size(); j ++) {
-					stringBuilder.append(textPositions.get(j).getUnicode());
-				}
-				var text = stringBuilder.toString();
+//				StringBuilder stringBuilder = new StringBuilder();
+//				for(int j = 0; j < textPositions.size(); j ++) {
+//					stringBuilder.append(textPositions.get(j).getUnicode());
+//				}
+//				var text = stringBuilder.toString();
 				//get position
 				TextPosition textPosition = textPositions.get(0);
 				var font = textPosition.getFont();
@@ -76,19 +76,19 @@ public class LineExtractor {
 				if(Objects.isNull(currentRect)) {
 					currentRect = new Rect(x1, y1, x2, y2);
 				}
-				if(Objects.isNull(currentLine)) {
-					currentLine = new Line(new Rect(x1, y1, x2, y2));
+				if(Objects.isNull(lineBuilder)) {
+					lineBuilder = new LineBuilder();
 				}
 				//Add line to lines
 				if(currentRect.getY1() != y1 || (Math.abs(currentRect.getX2() - x1) > scale * 2 && currentRect.getX1() != x1) ) {
-					currentLine.endLine();
-					lines.add(currentLine);
-					currentLine = new Line(new Rect(x1, y1, x2, y2));
+//					currentLine.endLine();
+					lines.addAll(lineBuilder.extractLine());
+					lineBuilder = new LineBuilder();
 					globalStyle = style;
 				}
 				//add string to line
-				currentLine.addIntoLine(text, new Rect(x1, y1, x2, y2), style);
-				currentRect = currentLine.getShape();
+				lineBuilder.addTextPosition(textPositions, new Rect(x1, y1, x2, y2));
+				currentRect = lineBuilder.getShape();
 			}
 
 			private  List<List<TextPosition>> splitTextPositions(List<TextPosition> textPositions) {
@@ -102,23 +102,23 @@ public class LineExtractor {
 		textStripper.setStartPage(pageIndex);
 		textStripper.setEndPage(pageIndex);
 		textStripper.getText(document);
-		if(Objects.nonNull(currentLine)) {
-			currentLine.endLine();
-			lines.add(currentLine);
+		if(Objects.nonNull(lineBuilder)) {
+//			lineBuilder.endLine();
+			lines.addAll(lineBuilder.extractLine());
 		}
 		return lines;
 	}
 	public void cleanPage () {
 		this.lines = new ArrayList<>();
 		this.globalStyle = null;
-		this.currentLine = null;
+		this.lineBuilder = null;
 		this.currentRect = null;
 	}
 
 	public void resetLine() {
 		lines = new ArrayList<>();
 		this.globalStyle = null;
-		this.currentLine = null;
+		this.lineBuilder = null;
 		this.currentRect = null;
 	}
 

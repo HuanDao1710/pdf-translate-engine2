@@ -1,13 +1,13 @@
 
-u	java:S135U"YReduce the total number of break and continue statements in this loop to use at most one.(ø—¿˜8ì…§ß›2
+u	java:S135U"YReduce the total number of break and continue statements in this loop to use at most one.(ø—¿˜8Æ©êİœ2
 \
-java:S1118":Add a private constructor to hide the implicit public one.(ÎİáÊøÿÿÿÿ8§†§ß›2
+java:S1118":Add a private constructor to hide the implicit public one.(ÎİáÊøÿÿÿÿ8âªêİœ2
 t
-java:S62010"RReplace this instanceof check and cast with 'instanceof PDFormXObject formXObject'(šÑ¡Ûşÿÿÿÿ8ÔÑ§ß›2
+java:S62010"RReplace this instanceof check and cast with 'instanceof PDFormXObject formXObject'(šÑ¡Ûşÿÿÿÿ8èªêİœ2
 s
-java:S6201;"VReplace this instanceof check and cast with 'instanceof PDTilingPattern tilingPattern'(¸ˆ¿8™¬ß›2
+java:S6201;"VReplace this instanceof check and cast with 'instanceof PDTilingPattern tilingPattern'(¸ˆ¿8êªêİœ2
 a
-java:S6201W"DReplace this instanceof check and cast with 'instanceof Operator op'(Ÿƒİˆ8«†§ß›2
+java:S6201W"DReplace this instanceof check and cast with 'instanceof Operator op'(Ÿƒİˆ8íªêİœ2
 _
 java:S1128
-"=Remove this unused import 'org.apache.pdfbox.pdmodel.PDPage'.(³‹Ìÿÿÿÿÿ8ƒ°ğ¦2
+"=Remove this unused import 'org.apache.pdfbox.pdmodel.PDPage'.(³‹Ìÿÿÿÿÿ8ñªêİœ2
