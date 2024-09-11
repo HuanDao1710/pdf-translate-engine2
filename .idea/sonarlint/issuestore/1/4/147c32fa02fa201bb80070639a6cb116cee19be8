@@ -1,0 +1,4 @@
+
+L	java:S106-"+Replace this use of System.out by a logger.(Ô¾Âıÿÿÿÿ8áÿÖ‡2
+â
+java:S65415"ÅA "Brain Method" was detected. Refactor it to reduce at least one of the following metrics: LOC from 92 to 64, Complexity from 19 to 14, Nesting Level from 5 to 2, Number of Variables from 23 to 6.(í‹ëc8æÿÖ‡2

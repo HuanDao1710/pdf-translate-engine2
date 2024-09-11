@@ -13,8 +13,9 @@ public class Utils {
 
 	public static final Pattern SPECIAL_CHARACTER_PATTERN = Pattern.compile("[^\\p{L}\\p{N}\\s]");
 
-	public static boolean isSpecialCharacter(char ch) {
-		return SPECIAL_CHARACTER_PATTERN.matcher(String.valueOf(ch)).find();
+	public static boolean isSpecialCharacterString(String input) {
+		// Kiểm tra xem chuỗi không rỗng và tất cả các ký tự đều là ký tự đặc biệt
+		return input != null && !input.isEmpty() && SPECIAL_CHARACTER_PATTERN.matcher(input).replaceAll("").isEmpty();
 	}
 
 }

@@ -14,23 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class APIClient {
-	public static List<float[]> createSampleData () {
-		List<float[]> data = new ArrayList<>();
-		for(int i = 0; i < 200; i ++) {
-			data.add(new float[]{0f, 0, 0, 0});
-		}
-		return data;
-	}
 
-	public static List<float[]> standardizeData(List<float[]> data) {
-		var newData = data;
-		while (newData.size() < 200) {
-			newData.add(new float[]{0,0,0,0});
-		}
-		return newData;
-	}
-
-	public static List<float[]> standardizeData2(List<List<Float>> data, float width, float height) {
+	public static List<float[]> augmentDataAttributes(List<List<Float>> data, float width, float height) {
 		var newData = new ArrayList<>(data);
 		while (newData.size() < 200) {
 			newData.add(new ArrayList<>(List.of(0f, 0f, 0f, 0f))); // Khởi tạo một ArrayList mới có thể sửa đổi
@@ -44,7 +29,8 @@ public class APIClient {
 			var y2 = sample1.get(3);
 			if(i < newData.size() - 1) {
 				var sample2 = newData.get(i + 1);
-				finalData.add(new float[]{x1,y1,x2,y2,x2 - x1, y2 - y1 ,x1 - sample2.get(0),y1 - sample2.get(1),  x2 - sample2.get(2), y1 - sample2.get(3)});
+				finalData.add(new float[]{x1,y1,x2,y2,x2 - x1, y2 - y1 ,
+						x1 - sample2.get(0),y1 - sample2.get(1),  x2 - sample2.get(2), y1 - sample2.get(3)});
 			} else  {
 				finalData.add(new float[]{x1,y1,x2,y2,x2 - x1, y2 - y1 ,0,0,0, 0});
 			}
@@ -53,14 +39,26 @@ public class APIClient {
 	}
 
 	public static List<List<List<Integer>>> call(List<List<List<Float>>> data, float width, float hieght) throws IOException {
-		Gson gson = new Gson();
-		List<List<float[]>> d = new ArrayList<>();
+		//sep
+		List<List<List<Float>>> newData = new ArrayList<>();
+		List<Integer> merger = new ArrayList<>();
 		for(int i = 0; i < data.size(); i ++) {
-			d.add(standardizeData2(data.get(i), width, hieght));
+			var arr = data.get(i);
+			while (arr.size() > 200) {
+				newData.add(arr.subList(0,200));
+				merger.add(i);
+				arr = arr.subList(200, arr.size());
+			}
+			newData.add(arr);
+			merger.add(i);
 		}
 
+		Gson gson = new Gson();
+		List<List<float[]>> d = new ArrayList<>();
+		for(int i = 0; i < newData.size(); i ++) {
+			d.add(augmentDataAttributes(newData.get(i), width, hieght));
+		}
 		String json = gson.toJson(d);
-//		System.out.println(json);
 		String jsonInputString = "{\"input\": " + json + "}";
 		URL url = new URL("http://localhost:5000/predict");
 		HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -74,7 +72,6 @@ public class APIClient {
 			os.write(input, 0, input.length);
 		}
 
-
 		// Đọc phản hồi từ server
 		StringBuilder response = new StringBuilder();
 		try (BufferedReader br = new BufferedReader(
@@ -85,9 +82,23 @@ public class APIClient {
 			}
 		}
 
-//		System.out.println("Response from server: " + response.toString());
-		return gson.fromJson(response.toString(),
+		List<List<List<Integer>>> resultsExtracted = gson.fromJson(response.toString(),
 				new TypeToken<List<List<List<Integer>>>>(){}.getType());
+
+		List<List<List<Integer>>> finalResults = new ArrayList<>();
+		int index = 0;
+		List<List<Integer>> item = new ArrayList<>();
+		for(int i = 0; i< resultsExtracted.size(); i++) {
+			if(merger.get(i) != index) {
+				index += 1;
+				finalResults.add(item);
+				item = resultsExtracted.get(i);
+			} else {
+				item.addAll(resultsExtracted.get(i));
+			}
+		}
+		finalResults.add(item);
+		return finalResults;
 	}
 
 }

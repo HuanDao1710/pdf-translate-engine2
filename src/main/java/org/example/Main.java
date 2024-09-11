@@ -22,7 +22,7 @@ public class Main {
 		String path15 ="sample/sample8.pdf";
 		String longSamplePath = "sample/long_sample.pdf";
 
-		InputStream inputStream = new FileInputStream(longSamplePath);
+		InputStream inputStream = new FileInputStream(path14);
 
 		PDFResolver pdfResolver = new PDFResolver(inputStream, "en", "vi");
 		var outPath = Path.of("output/result2.pdf");

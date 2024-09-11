@@ -58,3 +58,5 @@ d
 4src/main/java/org/example/lib/predict/APIClient.java,0\a\0a27f22ab70fe7f7257cd6d6141fc03fd19a2ebf
 n
 >src/main/java/org/example/lib/reader/AIParagraphExtractor.java,8\d\8da17421f7815389951c5b5574105c2b20cdf5a2
+e
+5src/main/java/org/example/lib/reader/LineBuilder.java,1\4\147c32fa02fa201bb80070639a6cb116cee19be8

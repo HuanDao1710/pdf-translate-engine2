@@ -40,17 +40,6 @@ public class PDFResolver {
 			limit = pages.getCount();
 		}
 
-//		var pageLines = IntStream.range(0, pages.getCount()).boxed().parallel()
-//				.map(index -> {
-//					LineExtractor lineExtractor = new LineExtractor(document);
-//					List<Line> lines ;
-//					try {
-//						lines = lineExtractor.extract( index + 1);
-//					} catch (IOException e) {
-//						return  new ArrayList<Line>();
-//					}
-//					return lines;
-//				}).toList();
 		List<List<Line>> pageLines = new ArrayList<>();
 		for (int index = 0; index< limit; index ++) {
 			LineExtractor lineExtractor = new LineExtractor(document);
@@ -71,7 +60,6 @@ public class PDFResolver {
 							.map(Paragraph::getTextString).toList())))
 					.toList();
 		TextRemover.removeAllTextFromPDF(document, limit);
-
 		for(int i = 0; i < limit; i ++) {
 			handleWritePage(document, pageParagraphs.get(i),paraTexTranslate.get(i), pages.get(i));
 		}
@@ -91,7 +79,6 @@ public class PDFResolver {
 			var para = pagePara.get(j);
 			var translatedText = translatedTexts.get(j);
 			var font = getFont(document, para.getStyle());
-
 			ContentWriter.write(contentStreamWriter, para, translatedText, font);
 		}
 		contentStreamWriter.close();

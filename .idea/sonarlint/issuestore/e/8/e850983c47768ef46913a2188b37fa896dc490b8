@@ -1,11 +1,10 @@
 
 j
 java:S1172#"MRemove these unused method parameters "numPageTranslateWithGPT", "gptAPIKey".(à•¼×8¿°ğ¦2
-X	java:S125,"<This block of commented-out lines of code should be removed.(ŠÇ´Õ8À°ğ¦2
-E	java:S108<")Either remove or fill this block of code.(ï­£Ä8Á°ğ¦2
-]	java:S125O"<This block of commented-out lines of code should be removed.(ÿ±”ìşÿÿÿÿ8Ã°ğ¦2
-]	java:S125Y"<This block of commented-out lines of code should be removed.(ü‡øúÿÿÿÿ8Æ°ğ¦2
+E	java:S1081")Either remove or fill this block of code.(ï­£Ä8Á°ğ¦2
+]	java:S125C"<This block of commented-out lines of code should be removed.(ÿ±”ìşÿÿÿÿ8Ã°ğ¦2
+]	java:S125M"<This block of commented-out lines of code should be removed.(ü‡øúÿÿÿÿ8Æ°ğ¦2
 Y
-java:S1128"7Remove this unused import 'java.util.stream.IntStream'.(ÙÉ½Ÿùÿÿÿÿ8ëäĞÀ2
+java:S1128"7Remove this unused import 'java.util.stream.IntStream'.(ÙÉ½Ÿùÿÿÿÿ8ó»ì÷2
 \
-java:S1144z":Remove this unused private "transformPageIfNeedTo" method.(àâƒ°ùÿÿÿÿ8Ë°ğ¦2
+java:S1144m":Remove this unused private "transformPageIfNeedTo" method.(àâƒ°ùÿÿÿÿ8Ë°ğ¦2
