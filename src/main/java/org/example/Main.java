@@ -19,6 +19,7 @@ public class Main {
 		String path12 = "sample/sample6.pdf";
 		String path13 = "sample/arabic3.pdf";
 		String path14 = "sample/sample7.pdf";
+		String path15 ="sample/sample8.pdf";
 		String longSamplePath = "sample/long_sample.pdf";
 
 		InputStream inputStream = new FileInputStream(longSamplePath);
